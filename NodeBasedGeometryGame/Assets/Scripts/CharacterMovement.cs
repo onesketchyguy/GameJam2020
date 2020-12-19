@@ -30,7 +30,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 input = new Vector3(Input.GetAxis("Horizontal") * speed, Input.GetAxis("Vertical"), 1);
         Vector3 velocity = rigidBody.velocity;
 
-        if (input.y != 0 && GroundCheck()) rigidBody.AddForce(Vector2.up * jumpSpeed);
+        if (input.y != 0 && GroundCheck()) velocity.y = jumpSpeed;
 
         velocity.x = input.x * Time.deltaTime;
         rigidBody.velocity = velocity;
