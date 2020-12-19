@@ -17,20 +17,23 @@ public class CharacterMovement : MonoBehaviour
 
     private float coyoteTime = 1;
 
-    // Start is called before the first frame update
-    private void Start()
+    private Vector3 input;
+
+    private void Update()
     {
+        input = new Vector3(Input.GetAxis("Horizontal") * speed, Input.GetAxis("Vertical"), 1);
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        coyoteTime -= Time.deltaTime;
+        bool grounded = GroundCheck() && coyoteTime > 0; // Debugs every frame, helpful for debugging if grounded.
 
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal") * speed, Input.GetAxis("Vertical"), 1);
+        if (coyoteTime > 0) coyoteTime -= Time.deltaTime;
+
         Vector3 velocity = rigidBody.velocity;
 
-        if (input.y != 0 && GroundCheck()) velocity.y = jumpSpeed;
+        if (input.y != 0 && grounded) velocity.y = jumpSpeed;
 
         velocity.x = input.x * Time.deltaTime;
         rigidBody.velocity = velocity;
@@ -38,19 +41,23 @@ public class CharacterMovement : MonoBehaviour
 
     private bool GroundCheck()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position - Vector3.up * groundCheckOffset, -Vector3.up, groundCheckDistance, ground);
+        bool grounded = false;
 
-        coyoteTime = (hitInfo.transform != null) ? CoyoteTime : coyoteTime;
+        int rayCount = 4;
 
-        return (hitInfo.transform != null);
-    }
+        for (int i = 0; i < rayCount; i++)
+        {
+            var offset = (Vector3.right * 0.1f * rayCount / 2) - (Vector3.right * 0.1f * i);
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = GroundCheck() ? Color.white : Color.red;
+            RaycastHit2D hitInfo = Physics2D.Raycast(transform.position + offset - Vector3.up * groundCheckOffset, -Vector3.up, groundCheckDistance, ground);
 
-        var start = transform.position - Vector3.up * groundCheckOffset;
+            Debug.DrawRay(transform.position + offset - Vector3.up * groundCheckOffset, -Vector3.up * groundCheckDistance, (hitInfo.transform != null) ? Color.blue : Color.red);
 
-        Gizmos.DrawLine(start, start - Vector3.up * groundCheckDistance);
+            grounded = grounded ? grounded : (hitInfo.transform != null);
+        }
+
+        coyoteTime = grounded ? CoyoteTime : coyoteTime;
+
+        return grounded;
     }
 }
