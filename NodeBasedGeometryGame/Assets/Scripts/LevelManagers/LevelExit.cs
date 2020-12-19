@@ -1,18 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
     public Animator animator;
 
+    private new Renderer renderer;
+
     [SerializeField]
     private bool isOpen = false;
 
     public string levelToLoad;
 
+    private void Start()
+    {
+        renderer = GetComponent<Renderer>();
+    }
+
     public void SetOpen(bool value)
     {
         isOpen = value;
+        StartCoroutine(YieldWaitOpenDoor());
+    }
+
+    private IEnumerator YieldWaitOpenDoor()
+    {
+        while (renderer.isVisible == false) yield return null;
+
         animator.SetBool("isOpen", isOpen);
     }
 
