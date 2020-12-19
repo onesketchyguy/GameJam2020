@@ -39,7 +39,7 @@ public class CharacterMovement : MonoBehaviour
         rigidBody.velocity = velocity;
     }
 
-    private bool GroundCheck()
+    public bool GroundCheck()
     {
         bool grounded = false;
 
