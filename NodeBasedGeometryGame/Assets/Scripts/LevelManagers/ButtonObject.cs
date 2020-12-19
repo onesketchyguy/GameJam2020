@@ -7,10 +7,14 @@ public class ButtonObject : MonoBehaviour
 
     public Sprite downSprite, upSprite;
 
-    [Tooltip("This item can trigger more than once.")]
-    public bool MultipleTrigger = false;
-
+    [Tooltip("This item only triggers once.")]
     public UnityEngine.Events.UnityEvent OnTriggered;
+
+    [Tooltip("This item can trigger more than once.")]
+    public UnityEngine.Events.UnityEvent OnUp;
+
+    [Tooltip("This item can trigger more than once.")]
+    public UnityEngine.Events.UnityEvent OnDown;
 
     private bool hasTriggered = false;
 
@@ -23,13 +27,20 @@ public class ButtonObject : MonoBehaviour
     {
         spriteRenderer.sprite = downSprite;
 
+        OnDown?.Invoke();
+
         if (Time.timeSinceLevelLoad < 1) return;
 
-        if (hasTriggered && !MultipleTrigger) return;
+        if (hasTriggered) return;
 
         OnTriggered?.Invoke();
         hasTriggered = true;
     }
 
-    private void OnCollisionExit2D() => spriteRenderer.sprite = upSprite;
+    private void OnCollisionExit2D()
+    {
+        spriteRenderer.sprite = upSprite;
+
+        OnUp?.Invoke();
+    }
 }

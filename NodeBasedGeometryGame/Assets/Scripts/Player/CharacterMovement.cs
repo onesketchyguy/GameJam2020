@@ -15,6 +15,8 @@ public class CharacterMovement : MonoBehaviour
     [Range(0.001f, 1)]
     public float CoyoteTime = 0.24f;
 
+    internal bool grounded;
+
     private float coyoteTime = 1;
 
     private Vector3 input;
@@ -27,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        bool grounded = GroundCheck() && coyoteTime > 0; // Debugs every frame, helpful for debugging if grounded.
+        grounded = GroundCheck() || coyoteTime > 0; // Debugs every frame, helpful for debugging if grounded.
 
         if (coyoteTime > 0) coyoteTime -= Time.deltaTime;
 
@@ -43,7 +45,7 @@ public class CharacterMovement : MonoBehaviour
     {
         bool grounded = false;
 
-        int rayCount = 4;
+        int rayCount = 1;
 
         for (int i = 0; i < rayCount; i++)
         {

@@ -18,9 +18,15 @@ public class PlayerAnimator : MonoBehaviour
         else if (controller.rigidBody.velocity.x < -WEIGHT)
             _renderer.flipX = true;
 
-        if (controller.rigidBody.velocity.y == 0)
+        if (controller.rigidBody.velocity.y > -WEIGHT &&
+            controller.rigidBody.velocity.y < WEIGHT &&
+            !controller.grounded)
         {
             biting = true;
+        }
+        else
+        {
+            biting = false;
         }
 
         animator.SetBool("Biting", biting);
