@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public float speed = 5;
-    public float jumpSpeed = 5;
+    public float jumpHeight = 5;
     public Rigidbody2D rigidBody;
 
     public float groundCheckOffset = 0.1f;
@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     public float CoyoteTime = 0.24f;
 
     internal bool grounded;
+    private bool jumped;
 
     private float coyoteTime = 1;
 
@@ -35,7 +36,15 @@ public class CharacterMovement : MonoBehaviour
 
         Vector3 velocity = rigidBody.velocity;
 
-        if (input.y != 0 && grounded) velocity.y = jumpSpeed;
+        if (input.y > 0 && grounded)
+        {
+            velocity.y = jumpHeight;
+            jumped = true;
+        }
+        else if (input.y == 0 && jumped && velocity.y > 0)
+        {
+            velocity.y = Mathf.Lerp(velocity.y, Physics2D.gravity.y, Time.fixedDeltaTime);
+        }
 
         velocity.x = input.x * Time.deltaTime;
         rigidBody.velocity = velocity;

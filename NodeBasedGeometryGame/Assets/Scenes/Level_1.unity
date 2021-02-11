@@ -1234,9 +1234,24 @@ PrefabInstance:
       propertyPath: CoyoteTime
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 21605265151194170, guid: a999810c2a6338a429512cbee6d07f64,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21605265151194170, guid: a999810c2a6338a429512cbee6d07f64,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 21605265151194171, guid: a999810c2a6338a429512cbee6d07f64,
         type: 3}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21605265151194171, guid: a999810c2a6338a429512cbee6d07f64,
+        type: 3}
+      propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21605265151194171, guid: a999810c2a6338a429512cbee6d07f64,
@@ -1481,6 +1496,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155459139040573007, guid: 839d7661b93d82b46967cf6897edf8b3,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155459139040573007, guid: 839d7661b93d82b46967cf6897edf8b3,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1213304273
       objectReference: {fileID: 0}
     - target: {fileID: 7511382491552928184, guid: 839d7661b93d82b46967cf6897edf8b3,
         type: 3}

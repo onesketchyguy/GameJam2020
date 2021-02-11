@@ -340,6 +340,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  actualCollisionArea: {x: 0.66, y: 0.25}
+  actualCollisionOffset: 0.01
 --- !u!1 &8257104398129226446
 GameObject:
   m_ObjectHideFlags: 0

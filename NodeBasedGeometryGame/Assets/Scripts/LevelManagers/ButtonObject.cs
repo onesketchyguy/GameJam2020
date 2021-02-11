@@ -16,6 +16,9 @@ public class ButtonObject : MonoBehaviour
     [Tooltip("This item can trigger more than once.")]
     public UnityEngine.Events.UnityEvent OnDown;
 
+    public Vector2 actualCollisionArea = Vector2.one * 0.25f;
+    public float actualCollisionOffset = 0.1f;
+
     private bool hasTriggered = false;
 
     private void Start()
@@ -23,8 +26,11 @@ public class ButtonObject : MonoBehaviour
         spriteRenderer.sprite = upSprite;
     }
 
-    private void OnCollisionEnter2D()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        var col = Physics2D.OverlapBox(transform.position + transform.up * actualCollisionOffset, actualCollisionArea, transform.rotation.z);
+        if (col == null || col.gameObject != collision.gameObject) return;
+
         spriteRenderer.sprite = downSprite;
 
         OnDown?.Invoke();
@@ -39,8 +45,16 @@ public class ButtonObject : MonoBehaviour
 
     private void OnCollisionExit2D()
     {
+        if (spriteRenderer.sprite != downSprite) return;
+
         spriteRenderer.sprite = upSprite;
 
         OnUp?.Invoke();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(transform.position + transform.up * actualCollisionOffset, actualCollisionArea);
     }
 }
